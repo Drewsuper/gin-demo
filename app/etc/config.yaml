@@ -4,4 +4,4 @@ port:
   8008
 MySql:
   DataSource:
-   www:Lh201807.@tcp(192.168.195.129:1002)/test?charset=utf8mb4
+   username:password@tcp(192.168.195.129:1002)/test?charset=utf8mb4
