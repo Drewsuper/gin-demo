@@ -7,11 +7,14 @@ import (
 )
 
 type ConfigData struct {
-	Host  string `yaml:"host"`
-	Port  string `yaml:"port"`
+	Host  string `yaml:"Host"`
+	Port  string `yaml:"Port"`
 	Mysql struct {
 		DataSource string `yaml:"DataSource"`
 	} `yaml:"mysql"`
+	JWT struct {
+		Secret string `yaml:"Secret"`
+	} `yaml:"JWT"`
 }
 
 var Config *ConfigData

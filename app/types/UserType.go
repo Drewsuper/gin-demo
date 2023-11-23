@@ -6,7 +6,7 @@ type (
 		PWD   string `json:"pwd"`
 	}
 	UserNewReq struct {
-		Uname string `josn:"uname"`
-		Pwd   string `josn:"pwd"`
+		Uname string `json:"uname"`
+		Pwd   string `json:"pwd"`
 	}
 )

@@ -12,8 +12,8 @@ func FindHandler(ctx *gin.Context) {
 	data := types.UserLoginReq{}
 	err := ctx.BindJSON(&data)
 	if err != nil {
-		log.Println("[Routers]\033[1;46;0m" + err.Error() + "\033[0m")
-		ctx.JSON(200, models.CommonRps{
+		log.Println("\033[0;31m[Routers]: " + err.Error() + "\033[0m")
+		ctx.JSON(200, types.CommonRps{
 			Code: 402,
 			Mes:  "failed",
 			Data: nil,
@@ -22,7 +22,7 @@ func FindHandler(ctx *gin.Context) {
 	}
 	userData := models.FindOne(data.Uname)
 	if userData.Id < 1 {
-		ctx.JSON(200, models.CommonRps{
+		ctx.JSON(200, types.CommonRps{
 			Code: 401,
 			Mes:  "failed",
 			Data: nil,
@@ -30,7 +30,7 @@ func FindHandler(ctx *gin.Context) {
 		return
 	}
 	log.Println(userData.ToString())
-	ctx.JSON(200, models.CommonRps{
+	ctx.JSON(200, types.CommonRps{
 		Code: 200,
 		Mes:  "success",
 		Data: userData,
