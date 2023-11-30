@@ -1,7 +1,7 @@
 package userHandler
 
 import (
-	"gin-new/app/middleware"
+	"gin-new/app/utils"
 	"gin-new/app/models"
 	"gin-new/app/types"
 	"github.com/gin-gonic/gin"
@@ -26,7 +26,7 @@ func UserLoginHandler(ctx *gin.Context) {
 		return
 	}
 	if user.UserPWD == data.PWD {
-		token_string, err := middleware.NewToken(user.Id)
+		token_string, err := utils.NewToken(user.Id)
 		if err == nil {
 			ctx.JSON(200, types.CommonRps{
 				Code: 200,
