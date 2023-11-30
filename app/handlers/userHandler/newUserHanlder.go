@@ -4,6 +4,7 @@ import (
 	"gin-new/app/models"
 	"gin-new/app/types"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func NewUser(ctx *gin.Context) {
@@ -17,8 +18,9 @@ func NewUser(ctx *gin.Context) {
 		return
 	}
 	newUser := models.User{Username: u.Uname, UserPWD: u.Pwd}
-	resutl := models.TX.Create(newUser).RowsAffected
-	if resutl > 0 {
+	log.Printf("%v", newUser)
+	result, _ := models.InsertUser(&newUser)
+	if result > 0 {
 		ctx.JSON(200, types.CommonRps{
 			Code: 200,
 			Mes:  "success",

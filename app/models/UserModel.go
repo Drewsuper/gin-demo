@@ -1,11 +1,12 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 )
 
 type User struct {
-	Id       int    `json:"id" gorm:"column:id;not null AUTO_INCREMENT;primaryKey"`
+	Id       int    `json:"id" gorm:"column:id;not null autoIncrement;primaryKey"`
 	Username string `json:"u_name" gorm:"column:uname"`
 	UserPWD  string `json:"pwd" gorm:"column:pwd"`
 }
@@ -33,12 +34,11 @@ func FindOneById(id int) User {
 	return user
 }
 
-func InsertUser(user User) (int, error) {
-	var err error
-	err = TX.Create(user).Error
-	if err != nil {
+func InsertUser(user *User) (int, error) {
+	row := TX.Create(user).RowsAffected
+	if row < 0 {
 		TX.Rollback()
-		return -1, err
+		return -1, errors.New("failed")
 	} else {
 		TX.Commit()
 		return 1, nil

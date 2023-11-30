@@ -6,7 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func init_user_routers(e *gin.Engine) {
-	e.POST("/user/login", userHandler.UserLoginHandler)
-	e.POST("/user/find", middleware.Auth(), userHandler.FindHandler)
+func init_user_routers(g *gin.RouterGroup) {
+	g.POST("/user/login", userHandler.UserLoginHandler)
+	g.POST("/user/find", middleware.Auth(), userHandler.FindHandler)
+	g.POST("/user/new", userHandler.NewUser)
 }
