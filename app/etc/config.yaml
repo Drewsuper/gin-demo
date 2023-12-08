@@ -4,7 +4,7 @@ Port:
   8008
 MySql:
   DataSource:
-#   7.@tcp(192.168.195.129:1002)/test?charset=utf8mb4
+    USERNAME:PASSWORD@tcp(IP:PORT)/DATABASE?charset=utf8mb4
 JWT:
   Secret:
     you_secret
