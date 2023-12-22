@@ -11,7 +11,6 @@ import (
 var (
 	DB  *gorm.DB
 	err error
-	TX  *gorm.DB
 )
 
 func InitDataBase() error {
@@ -23,7 +22,6 @@ func InitDataBase() error {
 		log.Printf("\033[0;31m[DataBase]: databases initialize failed %v\033[0m", err.Error())
 		return err
 	}
-	TX = DB.Begin()
 	log.Printf("\033[0;32m[DataBase]: databases initialize finished\033[0m")
 	return nil
 }

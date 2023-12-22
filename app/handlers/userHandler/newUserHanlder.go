@@ -1,7 +1,7 @@
 package userHandler
 
 import (
-	"gin-new/app/models"
+	"gin-new/app/models/userModel"
 	"gin-new/app/types"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -17,20 +17,19 @@ func NewUser(ctx *gin.Context) {
 		})
 		return
 	}
-	newUser := models.User{Username: u.Uname, UserPWD: u.Pwd}
+	newUser := userModel.User{Username: u.Uname, UserPWD: u.Pwd}
 	log.Printf("%v", newUser)
-	result, _ := models.InsertUser(&newUser)
-	if result > 0 {
+	_, errOne := userModel.InsertUser(&newUser)
+	if errOne == nil {
 		ctx.JSON(200, types.CommonRps{
 			Code: 200,
 			Mes:  "success",
 		})
 		return
-	} else {
-		ctx.JSON(200, types.CommonRps{
-			Code: 401,
-			Mes:  "failed",
-		})
-		return
 	}
+	ctx.JSON(200, types.CommonRps{
+		Code: 401,
+		Mes:  "failed",
+	})
+	return
 }

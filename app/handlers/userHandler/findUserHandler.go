@@ -1,7 +1,7 @@
 package userHandler
 
 import (
-	"gin-new/app/models"
+	"gin-new/app/models/userModel"
 	"gin-new/app/types"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -20,8 +20,9 @@ func FindHandler(ctx *gin.Context) {
 		})
 		return
 	}
-	userData := models.FindOne(data.Uname)
-	if userData.Id < 1 {
+	userData, err := userModel.FindOne(data.Uname)
+	if err != nil {
+		log.Printf("\033[0;31m%v\033[0m", err)
 		ctx.JSON(200, types.CommonRps{
 			Code: 401,
 			Mes:  "failed",
@@ -29,7 +30,6 @@ func FindHandler(ctx *gin.Context) {
 		})
 		return
 	}
-	log.Println(userData.ToString())
 	ctx.JSON(200, types.CommonRps{
 		Code: 200,
 		Mes:  "success",

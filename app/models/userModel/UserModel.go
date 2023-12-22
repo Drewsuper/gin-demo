@@ -1,8 +1,9 @@
-package models
+package userModel
 
 import (
 	"errors"
 	"fmt"
+	"gin-new/app/models"
 )
 
 type User struct {
@@ -19,39 +20,43 @@ func (u User) ToString() string {
 	return fmt.Sprintf("{'id':%d,'uname':%s,'pwd':%s}", u.Id, u.Username, u.UserPWD)
 }
 
-func FindOne(name string) User {
+func FindOne(name string) (User, error) {
 	user := User{}
-	_, err := DB.Where("uname = ?", name).First(&user).Rows()
-	if err != nil {
-		return User{}
+	tx := models.DB.Begin()
+	_, err := tx.Where("uname = ?", name).First(&user).Rows()
+	tx.Commit()
+	if err == nil {
+		return user, nil
 	}
-	return user
+	return User{}, err
 }
 
 func FindOneById(id int) User {
 	user := User{}
-	DB.Where("id = ?", id).First(&user)
+	models.DB.Where("id = ?", id).First(&user)
 	return user
 }
 
 func InsertUser(user *User) (int, error) {
-	row := TX.Create(user).RowsAffected
+	tx := models.DB.Begin()
+	row := tx.Create(user).RowsAffected
 	if row < 0 {
-		TX.Rollback()
+		tx.Rollback()
 		return -1, errors.New("failed")
 	} else {
-		TX.Commit()
+		tx.Commit()
 		return 1, nil
 	}
 }
 
 func UpdateData(id int, pwd string) (int, error) {
-	rowAffected := TX.Where("id = ?", id).Update("pwd", pwd).RowsAffected
+	tx := models.DB.Begin()
+	rowAffected := tx.Where("id = ?", id).Update("pwd", pwd).RowsAffected
 	if rowAffected > 0 {
-		TX.Commit()
+		tx.Commit()
 		return 1, nil
 	} else {
-		TX.Rollback()
+		tx.Rollback()
 		return -1, nil
 	}
 }

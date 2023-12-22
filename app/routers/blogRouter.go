@@ -1,9 +1,12 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin-new/app/handlers/blogHandler"
+	"github.com/gin-gonic/gin"
+)
 
 func init_blog_router(g *gin.RouterGroup) {
-	g.POST("/blog/new")
-	g.POST("/blog/delete")
-	g.POST("/blog/update")
+	g.POST("/blog/find", blogHandler.FindBlogHandler)
+	g.POST("/blog/new", blogHandler.NewBlogHandler)
+	//g.POST("/blog/update")
 }
