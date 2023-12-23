@@ -7,7 +7,7 @@ import (
 )
 
 func AllFindBlogHandler (ctx *gin.Context) {
-	var data []BlogModel
+	var data []blogModel.BlogModel
 	err := blogModel.FindAllBlog(&data)
 	if err == nil{
 		ctx.JSON(200, types.CommonRps{
