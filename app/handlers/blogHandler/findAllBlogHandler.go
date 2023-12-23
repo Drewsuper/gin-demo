@@ -1,8 +1,12 @@
 package blogHandler
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin-new/app/models/blogModel"
+	"gin-new/app/types"
+	"github.com/gin-gonic/gin"
+)
 
-func AllFindBlog (ctx *gin.Context) {
+func AllFindBlogHandler (ctx *gin.Context) {
 	var data []BlogModel
 	err := blogModel.FindAllBlog(&data)
 	if err == nil{
