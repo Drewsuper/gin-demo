@@ -13,13 +13,14 @@ func AllFindBlogHandler (ctx *gin.Context) {
 		ctx.JSON(200, types.CommonRps{
 			Code: 200,
 			Mes: "success",
-			Data: data 
+			Data: data,
 		})
 		return
 	}else {
 		ctx.JSON(200,types.CommonRps{
 			Code:400,
-			Mes: "failed"
+			Mes: "failed",
+			Data:err,
 		})
 		return
 	}
