@@ -43,3 +43,9 @@ func NewBlogContext(blog *BlogModel) (int64, error) {
 		return -1, errors.New("插入失败")
 	}
 }
+
+func FindAllBlog(data *[]BlogModel) error {
+	tx := models.DB.Begin()
+	_, err := tx.Find(&data).Rows()
+	return err
+}
